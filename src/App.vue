@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AccountList from './components/Accounts/AccountList.vue';
+  import AccountList from './components/Accounts/AccountList.vue';
 </script>
 
 <template>
@@ -9,8 +9,8 @@ import AccountList from './components/Accounts/AccountList.vue';
 </template>
 
 <style scoped>
-.app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+  .app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 </style>

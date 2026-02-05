@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import { useField } from 'vee-validate';
-import Select, { type SelectChangeEvent } from 'primevue/select';
+  import { useField } from 'vee-validate';
+  import Select, { type SelectChangeEvent } from 'primevue/select';
 
-interface Option {
-  label: string;
-  value: string;
-}
+  interface Option {
+    label: string;
+    value: string;
+  }
 
-interface Props {
-  name: string;
-  id?: string;
-  label?: string;
-  options: Option[];
-  placeholder?: string;
-  required?: boolean;
-}
+  interface Props {
+    name: string;
+    id?: string;
+    label?: string;
+    options: Option[];
+    placeholder?: string;
+    required?: boolean;
+  }
 
-const props = defineProps<Props>();
+  const props = defineProps<Props>();
 
-const { value, errorMessage, handleChange: veeValidateHandleChange } = useField(() => props.name);
+  const { value, errorMessage, handleChange: veeValidateHandleChange } = useField(() => props.name);
 
-const emit = defineEmits<{
-  change: []
-}>();
+  const emit = defineEmits<{
+    change: [];
+  }>();
 
-const handleChange = (event: SelectChangeEvent) => {
-  veeValidateHandleChange(event.value)
-  emit('change')
-};
+  const handleChange = (event: SelectChangeEvent) => {
+    veeValidateHandleChange(event.value);
+    emit('change');
+  };
 </script>
 
 <template>
@@ -35,10 +35,10 @@ const handleChange = (event: SelectChangeEvent) => {
     :id="props.id || props.name"
     v-model="value"
     :options="props.options"
-    optionLabel="label"
-    optionValue="value"
+    option-label="label"
+    option-value="value"
     :placeholder="props.placeholder"
-    :class="{ 'p-invalid': errorMessage }"
+    :invalid="!!errorMessage"
     fluid
     @change="handleChange"
   />

@@ -1,89 +1,88 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useForm } from 'vee-validate';
-import Button from 'primevue/button';
+  import { computed, ref } from 'vue';
+  import { useForm } from 'vee-validate';
+  import Button from 'primevue/button';
 
-import BaseInput from '@/components/ui/BaseInput.vue';
-import BaseSelect from '@/components/ui/BaseSelect.vue';
-import BaseTextarea from '@/components/ui/BaseTextarea.vue';
-import AccountTemplate from './AccountTemplate.vue';
+  import BaseInput from '@/components/ui/BaseInput.vue';
+  import BaseSelect from '@/components/ui/BaseSelect.vue';
+  import BaseTextarea from '@/components/ui/BaseTextarea.vue';
+  import AccountTemplate from './AccountTemplate.vue';
 
-import { useAccountStore } from '@/stores/useAccountStore';
+  import { useAccountStore } from '@/stores/useAccountStore';
 
-import type { Account, AccountFormData, AccountType } from '@/types/account';
-import { parseLabels, formatLabels } from '@/utils/labels';
-import { createAccountSchema } from '@/schemas/account';
-import { ACCOUNT_TYPES } from '@/constants/account';
+  import type { Account, AccountFormData, AccountType } from '@/types/account';
+  import { parseLabels, formatLabels } from '@/utils/labels';
+  import { createAccountSchema } from '@/schemas/account';
+  import { ACCOUNT_TYPES } from '@/constants/account';
 
-interface Props {
-  account: Account;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<{
-  remove: []
-}>();
-
-const accountStore = useAccountStore();
-
-const initialValues = computed<AccountFormData>(() => ({
-  id: props.account.id,
-  labelsInput: formatLabels(props.account.labels),
-  type: props.account.type,
-  login: props.account.login,
-  password: props.account.password
-}))
-const currentType = ref<AccountType>(props.account.type)
-
-const validationSchema = computed(() => createAccountSchema(currentType.value))
-
-const { handleSubmit, values, setFieldValue } = useForm<AccountFormData>({
-  validationSchema: validationSchema,
-  initialValues: initialValues.value,
-})
-
-const handleFieldChange = () => {
-  if (values.type === 'LDAP') {
-    setFieldValue('password', null)
+  interface Props {
+    account: Account;
   }
-  currentType.value = values.type
-  onSubmit()
-}
 
+  const props = defineProps<Props>();
+  const emit = defineEmits<{
+    remove: [];
+  }>();
 
-const updateAccount = (formValues?: AccountFormData) => {
-  const dataToSave = formValues ?? values
+  const accountStore = useAccountStore();
 
-  accountStore.updateAccount({
-    id: dataToSave.id,
-    labels: parseLabels(dataToSave.labelsInput || ''),
-    type: dataToSave.type,
-    login: dataToSave.login,
-    password: dataToSave.type === 'LDAP' ? null : dataToSave.password,
-  })
-}
+  const initialValues = computed<AccountFormData>(() => ({
+    id: props.account.id,
+    labelsInput: formatLabels(props.account.labels),
+    type: props.account.type,
+    login: props.account.login,
+    password: props.account.password,
+  }));
+  const currentType = ref<AccountType>(props.account.type);
 
-const isLDAP = computed(() => currentType.value === 'LDAP');
+  const validationSchema = computed(() => createAccountSchema());
 
-const onSubmit = handleSubmit((formValues) => {
-  updateAccount(formValues)
-})
+  const { handleSubmit, values, setFieldValue } = useForm<AccountFormData>({
+    validationSchema: validationSchema,
+    initialValues: initialValues.value,
+  });
+
+  const handleFieldChange = () => {
+    if (values.type === 'LDAP') {
+      setFieldValue('password', null);
+    }
+    currentType.value = values.type;
+    onSubmit();
+  };
+
+  const updateAccount = (formValues?: AccountFormData) => {
+    const dataToSave = formValues ?? values;
+
+    accountStore.updateAccount({
+      id: dataToSave.id,
+      labels: parseLabels(dataToSave.labelsInput || ''),
+      type: dataToSave.type,
+      login: dataToSave.login,
+      password: dataToSave.type === 'LDAP' ? null : dataToSave.password,
+    });
+  };
+
+  const isLDAP = computed(() => currentType.value === 'LDAP');
+
+  const onSubmit = handleSubmit((formValues) => {
+    updateAccount(formValues);
+  });
 </script>
 
 <template>
   <AccountTemplate>
-    <template v-slot:label>
+    <template #label>
       <BaseTextarea
         name="labelsInput"
         :id="values.id + 'labelsInput'"
         label="Метка"
         placeholder="admin; server1; production"
         :maxlength="50"
-        :autoResize="true"
+        auto-resize
         @blur="onSubmit"
       />
     </template>
-    <template v-slot:type>
+    <template #type>
       <BaseSelect
         name="type"
         :id="values.id + 'type'"
@@ -94,7 +93,7 @@ const onSubmit = handleSubmit((formValues) => {
         @change="handleFieldChange"
       />
     </template>
-    <template v-slot:login>
+    <template #login>
       <BaseInput
         name="login"
         :id="values.id + 'login'"
@@ -105,7 +104,7 @@ const onSubmit = handleSubmit((formValues) => {
         @blur="onSubmit"
       />
     </template>
-    <template v-slot:password v-if="!isLDAP">
+    <template #password v-if="!isLDAP">
       <BaseInput
         name="password"
         :id="values.id + 'password'"
@@ -117,21 +116,21 @@ const onSubmit = handleSubmit((formValues) => {
         @blur="onSubmit"
       />
     </template>
-    <template v-slot:actions>
+    <template #actions>
       <Button
         icon="pi pi-trash"
         severity="danger"
         text
         rounded
         class="remove"
-        @click="$emit('remove')"
+        @click="emit('remove')"
       />
     </template>
   </AccountTemplate>
 </template>
 
 <style scoped>
-.remove {
-  margin-top: -3px;
-}
+  .remove {
+    margin-top: -3px;
+  }
 </style>
