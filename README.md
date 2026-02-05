@@ -1,42 +1,32 @@
-# .
+## Демо
+- https://n-s-mordvinov.github.io/vue-accounts/
 
-This template should help get you started developing with Vue 3 in Vite.
+# Начало работы с Vue 3 и Vite
 
-## Recommended IDE Setup
+Этот шаблон поможет вам начать разработку на Vue 3 в среде Vite.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Рекомендуемая настройка IDE
 
-## Recommended Browser Setup
+[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (отключите Vetur).
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
+## Рекомендуемая настройка браузера
+
+- Браузеры на основе Chromium (Chrome, Edge, Brave и др.):
   - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
+  - [Включите Custom Object Formatter в Chrome DevTools](http://bit.ly/object-formatters)
 - Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+  - [Vue.js devtools](https://addons.mozilla.org/ru/firefox/addon/vue-js-devtools/)
+  - [Включите Custom Object Formatter в Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
 
-## Type Support for `.vue` Imports in TS
+## Поддержка типов для импортов `.vue` в TypeScript
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+TypeScript по умолчанию не может обрабатывать информацию о типах для импортов `.vue`, поэтому мы заменяем CLI `tsc` на `vue-tsc` для проверки типов. В редакторах кода нам нужен [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar), чтобы служба языка TypeScript понимала типы `.vue` файлов.
 
-## Customize configuration
+## Настройка конфигурации
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+См. [Справочник по конфигурации Vite](https://vite.dev/config/).
 
-## Project Setup
+## Настройка проекта
 
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
